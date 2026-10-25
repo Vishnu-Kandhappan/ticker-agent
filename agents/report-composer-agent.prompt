@@ -1,0 +1,52 @@
+REPORT COMPOSER AGENT — ASD-STE100 PROMPT
+
+Purpose:
+Combine outputs from both agents and produce the final ASD-STE100 report.
+
+Task:
+You must combine the outputs from:
+- Ticker Research Agent
+- Ticker Strategy Analyzer
+
+You must produce a final report in ASD-STE100 format.
+
+Output Sections:
+
+1. Ticker Overview
+   - Today's price summary
+   - This week's expected trend
+
+2. Movement Classification
+   - Rise / Fall / Sideways
+   - One-sentence justification
+
+3. Strategic Analysis Summary
+   - Key signals
+   - Risk profile
+   - Scenario map
+
+4. Final Assessment
+   - Expected movement
+   - Confidence level
+
+5. Source Appendix
+   - All URLs
+   - All timestamps
+   - All trust labels
+   - All blocked pages
+
+Rules:
+- Use simple language.
+- Use short sentences.
+- Avoid complex grammar.
+- Do not add new data.
+- Use only the two agent outputs.
+
+---
+MACHINE CONTRACT (the program uses this part)
+
+The program builds this report without a language model. It copies the text
+and numbers from the two agent outputs into the five sections above. This
+makes sure that the report cannot add new data. The program then checks each
+sentence against the ASD-STE100 length rule and lists any sentence that is
+too long at the end of the report.

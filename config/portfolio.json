@@ -1,0 +1,10 @@
+{
+  "asset": [
+    "AAPL",
+    "TSLA",
+    "RELIANCE.NS"
+  ],
+  "watch_list": ["BABA", "NVDA", "MSFT","GC=F"],
+  "precious-metals": ["Gold (XAU/USD)"],
+  "manual_updates": "Expecting high volatility this week due to central bank meetings. Keep an eye on Reliance Q3 earnings."
+}
