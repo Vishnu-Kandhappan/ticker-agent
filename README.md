@@ -1,15 +1,69 @@
-# Financial Alert
+# Ticker Agent
 
-A LangGraph workflow for portfolio research. It saves a dated Markdown report with a metrics dashboard and an appendix for search diagnostics and source links. It can also post the report to Slack.
+A local, privacy-friendly research assistant for a personal stock portfolio. It gathers market data and news, checks each stock against eight proven short-term trading strategies, and writes a plain-English report saying whether there is a trade setup today, and how sure it is. It is built to be honest by design: the program calculates every number, the local AI only writes or sorts text, and its output is checked before use. Missing data lowers confidence instead of being guessed, and "no setup" is a normal answer.
 
-## Agent roles
+This project has two workflows:
+- Portfolio briefing (`financial-alert.py`): a daily summary of all holdings, with the news behind each price move.
+- Ticker review (`ticker-review.py`): a three-agent pipeline per stock. A research agent gathers data, a strategy analyzer applies the scoring rules, and a report composer writes the final report in ASD-STE100 Simplified Technical English.
 
-1. **MarketAnalystAgent** receives one asset's five-session trend and trusted, dated news snippets. It explains a catalyst only when a returned publisher supports that explanation. It uses a local Ollama model and returns a fixed no-catalyst sentence if the model is unavailable or its citation cannot be validated.
-2. **AgentOrchestrator** compiles market data, catalyst explanations, and the user's note into the required Markdown briefing. It builds the metrics table and keeps raw URLs, search status, and data limits in the appendix.
+View the live visual story: https://vishnu-kandhappan.github.io/ticker-agent/
 
-Research planning, search retrieval, and price collection are data services. They do not generate prose or investment conclusions. Search queries include the current date and ask for company-specific fiscal calendars. Search results are limited to Bloomberg, Reuters, The Wall Street Journal, and CNBC.
+## Tech stack
 
-The report uses observed market data for prices and momentum. The local model explains possible price catalysts from retrieved news. It cannot change numeric data or create source links. The report is not a forecast or a personalized investment recommendation.
+| Layer | Tools |
+|---|---|
+| Language | Python 3.10+ |
+| Market data | Yahoo Finance (yfinance), with indicators (RSI, MACD, EMAs, ATR, ADX, Bollinger Bands) calculated locally in pandas |
+| News | DuckDuckGo news search (ddgs) through a polite crawler: safe search, robots.txt, request pacing, one retry, trust labels |
+| AI | Local Ollama (`gemma3:4b`), JSON output, every reply validated (grounded numbers, cited sources, sentence limits) |
+| Orchestration | LangGraph (portfolio briefing), plain Python (ticker review) |
+| Rules | A Markdown skill file defining factor ratings, strategy gates, confidence scoring and regime filters |
+| Delivery | Markdown reports and Slack Block Kit (aligned tables, multi-message) |
+| Observability | OpenTelemetry traces and metrics over OTLP, GenAI conventions for model calls (tokens, latency, tokens per second, cold starts, validation outcomes); works with Grafana, Tempo, Prometheus or Langfuse |
+
+## How to tune it
+
+| What to change | Where |
+|---|---|
+| Stocks to review | `config/portfolio.json` (`asset`, `watch_list`) |
+| News depth and crawl politeness | `.env`: `MAX_NEWS_ITEMS`, `CRAWLER_SLEEP_MS`, `CRAWLER_TIMEOUT_MS`, `SAFE_SEARCH` |
+| Search queries | `src/ticker_review/pipeline.py` (ticker and economy queries) |
+| Source trust lists | `src/ticker_review/crawler.py`, documented in `config/crawler-rules.md` |
+| Model and runtime | `.env`: `LOCAL_LLM_MODEL`, `LOCAL_LLM_BASE_URL`, `LOCAL_LLM_TIMEOUT_SECONDS`; `--no-llm` for rules-only runs |
+| Agent behaviour and tone | Prompt files in `agents/*.prompt` |
+| Strategy thresholds and scoring | `skills/ticker-strategy-analyzer/skill-description.md`, with matching code in `src/ticker_review/strategies.py`. Change both together |
+| Account size and risk per trade | `ACCOUNT_SIZE` and `RISK_FRACTION` in `strategies.py` |
+| Telemetry | `.env`: `OTEL_TRACES_EXPORTER`, `OTEL_METRICS_EXPORTER`, `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` |
+| Slack delivery | `SLACK_WEBHOOK_URL` in `.env`; `--slack` flag for ticker reviews |
+
+## Quick start
+
+1. Create the environment and install dependencies:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+2. Configure your environment variables in `.env` (for example, set your local model, Slack webhook, and telemetry preferences).
+
+3. Run the portfolio briefing:
+
+```powershell
+.\.venv\Scripts\python.exe financial-alert.py
+```
+
+4. Run a ticker review for one or more symbols:
+
+```powershell
+.\.venv\Scripts\python.exe ticker-review.py NVDA MSFT
+```
+
+5. Install Ollama and download the configured local model before running the local AI pipeline:
+
+```powershell
+ollama pull gemma3:4b
+```
 
 ## Portfolio format
 
@@ -24,54 +78,20 @@ The portfolio lives in `config/portfolio.json`. `asset` contains current holding
 }
 ```
 
-The metrics dashboard shows the close and the price position in the one-year range when the provider returns those values. A low range position does not prove that a share is under-valued or suitable to buy.
+## What the agent is designed to do
 
-## Ticker review (three agents)
+- Gather reliable market data and recent news.
+- Score each ticker using multiple short-term trading factors.
+- Check whether a trade setup is supported by strategy rules and confidence thresholds.
+- Write a clear report that separates facts from interpretation.
+- Lower confidence when data is missing instead of making up a story.
 
-`ticker-review.py` runs a per-ticker pipeline: **Ticker Research Agent → Ticker Strategy Analyzer → Report Composer**. It rates 9 short-term factors, checks 8 trading strategies (Mean Reversion, PEAD, VCP, Gap and Go, Momentum, Earnings Run-Up, 52-Week High, Sector Rotation), and writes an ASD-STE100 report to `artifacts/ticker-review-<TICKER>-<date>.md`.
+## Important note
 
-```powershell
-.\.venv\Scripts\python.exe ticker-review.py NVDA MSFT
-```
+Educational analysis, not investment advice.
 
-Prompts are in `agents/`, the scoring rules in `skills/ticker-strategy-analyzer/skill-description.md`, and the crawler rules in `config/crawler-rules.md`. See `docs/ticker-review.md` for the flow, `.env` keys, and limits.
+---
 
-## Setup and run
+The project is built to be explicit about its limits. It does not know your investment horizon, risk tolerance, tax status, income, debts, liquidity needs, or position sizes. The workflow is meant to support research and decision-making with grounded, explainable outputs.
 
-Install the dependencies with Python 3.10 or newer:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-Set the optional Slack Incoming Webhook value in `.env`. Then run:
-
-```powershell
-.\.venv\Scripts\python.exe financial-alert.py
-```
-
-Install Ollama and download the configured local model before running catalyst analysis:
-
-```powershell
-ollama pull gemma3:4b
-```
-
-The model endpoint and timeout are configurable with `LOCAL_LLM_BASE_URL`, `LOCAL_LLM_MODEL`, and `LOCAL_LLM_TIMEOUT_SECONDS`. If local inference fails, the report states that no clear catalyst was found.
-
-Search requests are sequential. `NEWS_MIN_REQUEST_INTERVAL_SECONDS` sets the minimum pause between requests (default and minimum 2 seconds), and `NEWS_MAX_RETRIES` sets the maximum attempts per backend. Retries use exponential backoff.
-
-The app loads `.env` from the current directory or the project root. Existing shell variables take priority. Slack delivery runs when `SLACK_WEBHOOK_URL` is set.
-
-## OpenTelemetry
-
-Both apps export traces and metrics over OTLP/HTTP. Telemetry starts in each CLI after `.env` loads. Set `OTEL_TRACES_EXPORTER=console` to print spans locally, or `otlp` to export to `OTEL_EXPORTER_OTLP_ENDPOINT` (the collector base URL, for example `http://localhost:4318`). The app adds `/v1/traces` and `/v1/metrics`. Metrics export over OTLP by default when traces do; set `OTEL_METRICS_EXPORTER=none` for a trace-only backend. `financial-alert.py` reports as `OTEL_SERVICE_NAME` and `ticker-review.py` as `TICKER_REVIEW_SERVICE_NAME` (default `ticker-review`).
-
-Each run is one trace (`portfolio_briefing`) and each ticker review is one trace (`ticker_review`). A shared `session.id` groups the traces of one run. Market-data, search, and crawler spans record counts, failures, and latency. Every Ollama call is a `chat <model>` span with OpenTelemetry GenAI attributes (model, input and output tokens, finish reason), Ollama timings (load, prompt, and generation time, tokens per second, cold starts), and the outcome of the program checks on the model output. Prompts and responses are recorded only when `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true`. See `docs/observability.md` for the full span and metric reference, example queries, and Langfuse settings.
-
-Gold is listed under `precious-metals` in `portfolio.json`. The workflow maps it to `GC=F` and uses the latest one-day futures close. This is a continuous gold futures instrument, not spot XAU/USD. If the provider fails, the report uses the same unavailable market snapshot schema used for other instruments.
-
-## Data limits
-
-Prices and volume use Yahoo Finance through yfinance. The latest daily close can be delayed. Coverage and timestamps vary by ticker. The dashboard's direction label shows the sign of the five-session change. It is not a forecast or a buy or sell recommendation. Search results can be missing. A missing result does not prove that no event occurred.
-
-The report is educational. It is not personal investment advice. The workflow does not know your investment horizon, risk tolerance, tax status, income, debts, liquidity needs, or position sizes. Review those limits before you make an investment decision.
+If you want to understand the architecture visually, open the live page at https://vishnu-kandhappan.github.io/ticker-agent/.

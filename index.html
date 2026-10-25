@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Review Agents Architecture · VK</title>
+    <title>Ticker Agent Architecture · VK</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,13 +47,11 @@
         a:hover { color: #7ff3e9; text-decoration: underline; }
         ::selection { background: var(--orange); color: #111; }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-2); }
         ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
-        /* ---------- Header ---------- */
         .site-header {
             position: sticky; top: 0; z-index: 50;
             backdrop-filter: blur(14px);
@@ -90,15 +88,12 @@
         .icon-link:hover { color: var(--teal); border-color: var(--teal); text-decoration: none; box-shadow: 0 0 14px var(--teal-glow); }
         .icon-link.linkedin:hover { color: var(--orange); border-color: var(--orange); box-shadow: 0 0 14px var(--orange-glow); }
 
-        /* ---------- Layout ---------- */
         .page { max-width: 1240px; margin: 0 auto; padding: 32px 20px 56px; }
-        
-        /* ---------- Footer ---------- */
+
         footer { border-top: 1px solid var(--line); margin-top: 40px; }
         .footer-inner { max-width: 1240px; margin: 0 auto; padding: 20px; display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; font-size: 0.8rem; color: var(--muted); }
         .footer-inner .links { display: flex; gap: 14px; flex-wrap: wrap; }
 
-        /* ---------- Diagram specifics ---------- */
         .glow { box-shadow: 0 0 20px -5px var(--teal-glow); }
         .node-card {
             transition: all 0.3s ease;
@@ -119,8 +114,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Header -->
     <header class="site-header">
         <div class="header-inner">
             <a class="brand" href="#" title="Vishnu Kandhappan — Home">
@@ -136,30 +129,28 @@
                     <text x="32" y="40.5" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="20" text-anchor="middle" fill="url(#vkGrad)" letter-spacing="0.5">VK</text>
                 </svg>
                 <span class="brand-text">
-                    <span class="brand-title">Stock Review Agents Architecture</span>
+                    <span class="brand-title">Ticker Agent Architecture</span>
                     <span class="brand-sub">by Vishnu Kandhappan · AI &amp; Finance</span>
                 </span>
             </a>
             <nav class="header-links" aria-label="Profile links">
                 <a class="icon-link linkedin" href="https://www.linkedin.com/in/vishnu-k-b6632169" target="_blank" rel="noopener" title="LinkedIn">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5A1.56 1.56 0 1 1 6.94 5.4a1.56 1.56 0 0 1 0 3.1ZM5.5 9.5h2.88v8.5H5.5zm4.67 0h2.76v1.16h.04c.38-.72 1.32-1.48 2.72-1.48 2.91 0 3.45 1.91 3.45 4.4v4.42h-2.88v-4.13c0-1.02-.02-2.33-1.42-2.33-1.42 0-1.64 1.11-1.64 2.25v4.21H10.17z"/></svg>
                     <span>LinkedIn</span>
                 </a>
                 <a class="icon-link hide-sm" href="https://github.com/Vishnu-Kandhappan" target="_blank" rel="noopener" title="GitHub">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3"/></svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57l-.02-2.13c-3.37.73-4.08-1.61-4.08-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.1-.75.08-.74.08-.74 1.21.09 1.85 1.25 1.85 1.25 1.08 1.84 2.84 1.31 3.53 1 .11-.78.42-1.31.76-1.61-2.68-.3-5.5-1.34-5.5-5.96 0-1.32.47-2.4 1.24-3.25-.12-.3-.54-1.54.12-3.2 0 0 1.01-.32 3.3 1.23A11.4 11.4 0 0 1 12 6.8c1.02 0 2.05.14 3.01.41 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.9.12 3.2.78.85 1.24 1.93 1.24 3.25 0 4.63-2.83 5.65-5.52 5.95.43.38.82 1.13.82 2.28v3.37c0 .31.22.69.84.57A12 12 0 0 0 12 .3Z"/></svg>
                     <span>GitHub</span>
                 </a>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="page">
         <div class="max-w-5xl mx-auto">
-            
             <header class="text-center mb-12 relative z-10">
                 <h1 class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-teal-400 mb-4 tracking-tight">
-                    Stock Review Agents
+                    Ticker Agent
                 </h1>
                 <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
                     A local, privacy-friendly research assistant for personal stock portfolios, generating plain-English reports via orchestrated AI agents.
@@ -167,58 +158,49 @@
             </header>
 
             <div class="relative flex flex-col items-center w-full">
-
-                <!-- 1. INPUTS LAYER -->
                 <div class="w-full flex flex-col items-center relative z-10">
                     <div class="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Configuration & Inputs</div>
                     <div class="flex flex-wrap justify-center gap-3 w-full max-w-3xl">
                         <div class="node-card rounded-lg px-4 py-3 flex items-center gap-2 glow">
-                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1h6v6H9V1zm-6 8h18M5 1h2v6H5V1zm14 0h2v6h-2V1zM4 15h16v8H4v-8z"/></svg>
                             <span class="text-sm font-medium text-slate-300">config/portfolio.json</span>
                         </div>
                         <div class="node-card rounded-lg px-4 py-3 flex items-center gap-2 glow">
-                            <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.3 8.2a3.8 3.8 0 0 1 5.4 0l2.1 2.1a3.8 3.8 0 0 1-5.4 5.4l-1.1-1.1M13.7 15.8a3.8 3.8 0 0 1-5.4 0L6.2 13.7a3.8 3.8 0 1 1 5.4-5.4l1.1 1.1"/></svg>
                             <span class="text-sm font-medium text-slate-300">.env Settings</span>
                         </div>
                         <div class="node-card rounded-lg px-4 py-3 flex items-center gap-2 glow">
-                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8M8 14h8M8 18h5M5 4h14a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2z"/></svg>
                             <span class="text-sm font-medium text-slate-300">agents/*.prompt</span>
                         </div>
                         <div class="node-card rounded-lg px-4 py-3 flex items-center gap-2 glow">
-                            <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.4 15a1.9 1.9 0 0 1 0 2.7l-.6.6a2.1 2.1 0 0 1-3 0L7.5 9.2a2.1 2.1 0 0 1 0-3l.6-.6a1.9 1.9 0 0 1 2.7 0l9.6 9.4zM7.5 13.5l3 3M6 18l-3 3m14-14l2 2"/></svg>
                             <span class="text-sm font-medium text-slate-300">skill files</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Connector Down -->
                 <div class="w-px h-8 bg-gradient-to-b from-slate-600 to-slate-500 my-2"></div>
 
-                <!-- Branching Tree SVG -->
                 <div class="w-full max-w-3xl hidden md:flex justify-between items-start h-8">
                     <div class="w-1/2 border-t border-slate-600 h-full border-l rounded-tl-xl mt-[-1px]"></div>
                     <div class="w-1/2 border-t border-slate-600 h-full border-r rounded-tr-xl mt-[-1px]"></div>
                 </div>
-                
+
                 <div class="md:hidden w-px h-8 bg-slate-600"></div>
 
-                <!-- OBSERVABILITY WRAPPER (Cross-cutting) -->
                 <div class="w-full relative border-2 border-dashed border-teal-500/30 rounded-2xl bg-teal-950/10 p-4 md:p-8 mt-2 md:mt-0 pt-12 md:pt-10">
-                    <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-[#0b0d12] border border-teal-500/50 text-teal-300 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold flex items-center gap-2 shadow-[0_0_15px_rgba(46,230,214,0.2)]">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        Observability: OpenTelemetry Traces & Metrics
+                    <div class="absolute -top-3 md:-top-4 left-1/2 transform -translate-x-1/2 bg-[#0b0d12] border border-teal-500/50 text-teal-300 px-4 py-1.5 rounded-full text-xs md:text-sm font-medium">
+                        <span class="inline-flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-9 9V7m12 14v-7m-6 7V4"/></svg> Observability: OpenTelemetry Traces & Metrics</span>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative z-10">
-                        
-                        <!-- 2A. LEFT BRANCH: PORTFOLIO BRIEFING -->
                         <div class="flex flex-col items-center">
                             <div class="text-xs font-semibold uppercase tracking-widest text-teal-400 mb-3">Workflow 1</div>
-                            
                             <div class="node-card w-full border rounded-xl p-5 relative overflow-hidden backdrop-blur-sm">
                                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-blue-500"></div>
                                 <h3 class="text-lg font-bold text-teal-100 flex items-center gap-2 mb-2">
-                                    <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                    <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5h6m-6 7h6m-6 7h6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
                                     Portfolio Briefing
                                 </h3>
                                 <code class="block font-mono text-xs text-teal-300/80 mb-4 bg-teal-950/50 p-1.5 rounded inline-block border border-teal-800/30">financial-alert.py</code>
@@ -231,16 +213,13 @@
                             </div>
                         </div>
 
-                        <!-- 2B. RIGHT BRANCH: TICKER REVIEW PIPELINE -->
                         <div class="flex flex-col items-center">
                             <div class="text-xs font-semibold uppercase tracking-widest text-orange-400 mb-3">Workflow 2</div>
-                            
                             <div class="w-full bg-[#0e1117]/80 border border-[#2a3140] rounded-xl p-5 relative backdrop-blur-sm flex flex-col items-center">
                                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-rose-500 rounded-t-xl"></div>
-                                
                                 <div class="w-full mb-5 border-b border-[#2a3140] pb-4">
                                     <h3 class="text-lg font-bold text-orange-100 flex items-center gap-2 mb-2">
-                                        <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                        <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7zm3 5h10M8 3v4m8-4v4"/></svg>
                                         Ticker Review
                                     </h3>
                                     <code class="block font-mono text-xs text-orange-300/80 mb-2 bg-orange-950/50 p-1.5 rounded inline-block border border-orange-800/30">ticker-review.py</code>
@@ -251,7 +230,7 @@
                                     <div class="node-card w-full rounded-lg p-4 shadow-[0_0_10px_rgba(37,99,235,0.1)] relative z-10 border-l-2 border-l-blue-500">
                                         <div class="flex items-center gap-3 mb-2">
                                             <div class="bg-blue-900/50 p-1.5 rounded text-blue-400">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8M8 14h8M8 18h5M5 4h14a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2z"/></svg>
                                             </div>
                                             <h4 class="font-semibold text-blue-200 text-sm">1. Research Agent</h4>
                                         </div>
@@ -262,13 +241,13 @@
                                     </div>
 
                                     <div class="h-6 flex items-center justify-center text-slate-600">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                                     </div>
 
                                     <div class="node-card w-full rounded-lg p-4 shadow-[0_0_10px_rgba(192,38,211,0.1)] relative z-10 border-l-2 border-l-fuchsia-500">
                                         <div class="flex items-center gap-3 mb-2">
                                             <div class="bg-fuchsia-900/50 p-1.5 rounded text-fuchsia-400">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9h-18"/></svg>
                                             </div>
                                             <h4 class="font-semibold text-fuchsia-200 text-sm">2. Strategy Analyzer</h4>
                                         </div>
@@ -276,13 +255,13 @@
                                     </div>
 
                                     <div class="h-6 flex items-center justify-center text-slate-600">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                                     </div>
 
                                     <div class="node-card w-full rounded-lg p-4 shadow-[0_0_10px_rgba(5,150,105,0.1)] relative z-10 border-l-2 border-l-emerald-500">
                                         <div class="flex items-center gap-3 mb-2">
                                             <div class="bg-emerald-900/50 p-1.5 rounded text-emerald-400">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
                                             </div>
                                             <h4 class="font-semibold text-emerald-200 text-sm">3. Report Composer</h4>
                                         </div>
@@ -301,31 +280,29 @@
                     <div class="w-1/2 border-b border-slate-600 h-full border-l rounded-bl-xl mt-[-1px]"></div>
                     <div class="w-1/2 border-b border-slate-600 h-full border-r rounded-br-xl mt-[-1px]"></div>
                 </div>
-                
+
                 <div class="md:hidden w-px h-8 bg-slate-600"></div>
                 <div class="w-px h-6 bg-slate-600"></div>
                 <div class="flex items-center justify-center text-slate-600 -mt-2 mb-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                 </div>
 
-                <!-- 3. OUTPUT LAYER -->
                 <div class="w-full flex flex-col items-center relative z-10">
                     <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500 mb-3">Delivery / Outputs</div>
-                    
                     <div class="flex flex-wrap justify-center gap-4 w-full max-w-xl">
                         <div class="node-card border rounded-xl p-4 flex items-center gap-4 glow w-full sm:w-auto border-emerald-700/30">
                             <div class="bg-emerald-900/50 p-2 rounded-lg text-emerald-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m-6-8h6M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
                             </div>
                             <div>
                                 <h4 class="font-bold text-emerald-100 text-sm">Markdown Reports</h4>
                                 <p class="text-xs text-emerald-300/70">Local files with grounded numbers</p>
                             </div>
                         </div>
-                        
+
                         <div class="node-card border rounded-xl p-4 flex items-center gap-4 glow w-full sm:w-auto border-emerald-700/30">
                             <div class="bg-emerald-900/50 p-2 rounded-lg text-emerald-400">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M5 8h14M5 16h14"/></svg>
                             </div>
                             <div>
                                 <h4 class="font-bold text-emerald-100 text-sm">Slack Delivery</h4>
@@ -334,15 +311,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-inner">
-            <span>Built by <a href="https://vishnu-kandhappan.github.io/">Vishnu Kandhappan</a> · Architecture Diagram.</span>
+            <span>Built by <a href="https://vishnu-kandhappan.github.io/">Vishnu Kandhappan</a> · Ticker Agent Architecture.</span>
             <span class="links">
                 <a href="https://www.linkedin.com/in/vishnu-k-b6632169" target="_blank" rel="noopener">LinkedIn</a>
                 <a href="https://github.com/Vishnu-Kandhappan" target="_blank" rel="noopener">GitHub</a>
@@ -350,6 +325,5 @@
             </span>
         </div>
     </footer>
-
 </body>
 </html>
